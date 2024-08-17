@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/koyeb/example-expressjs#readme",
   "dependencies": {
+    "body-parser": "^1.20.2",
     "express": "^4.17.1",
     "socket.io": "^4.7.5"
   }

@@ -1,4 +1,5 @@
 const express = require('express')
+const bodyParser = require('body-parser');
 const fs = require('fs');
 const { Server } = require("socket.io");
 const https = require('https');
@@ -38,7 +39,7 @@ http.listen(port)
 let transactionAmountInCents;
 let invoice_pdf;
 let invoice_number;
-const endpointSecret = "whsec_Q6OpSh5yLn9I0c2QMt4NbHT2hcAs58Zl";
+const endpointSecret = "whsec_sMVll0GkTzvuTo0q9MzFCXcj7UL6ZU5i";
 
 app.post('/webhook', express.raw({type: 'application/json'}), (request, response) => {
 
