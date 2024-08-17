@@ -45,9 +45,12 @@ app.post('/webhook', express.raw({type: 'application/json'}), (request, response
   invoice_pdf = "";
   invoice_number= 0;
   transactionAmountInCents = 0;
-  console.log("INside /webhook!!!!");
+  console.log("Inside webhook!!!!");
   // console.log("req.rwaBody" , request.rawBody)
   // console.log("req.body", request.body);
+
+  io.emit('message', "Webhook Received") 
+
 
   let event;
 
@@ -74,6 +77,7 @@ app.post('/webhook', express.raw({type: 'application/json'}), (request, response
       default:
      console.log(`Unhandled event type ${event.type}`);
   }
+
 });
 // app.use(cors());
 app.use((req, res, next) => {
