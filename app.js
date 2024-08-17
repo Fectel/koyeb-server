@@ -26,8 +26,10 @@ io.on("connection", (socket) => {
 
   console.log("socket.io is connected")
 })
-app.use(express.static('static'))
+server.listen(port)
 
-app.listen(port, () => {
-  console.log(`App listening at http://localhost:${port}`)
-})
+app.use(express.static('static'))
+app.listen(server)
+// app.listen(port, () => {
+//   console.log(`App listening at http://localhost:${port}`)
+// })
