@@ -39,7 +39,7 @@ http.listen(port)
 let transactionAmountInCents;
 let invoice_pdf;
 let invoice_number;
-const endpointSecret = "whsec_sMVll0GkTzvuTo0q9MzFCXcj7UL6ZU5i";
+const endpointSecret = "whsec_pJqGUEzEdLxovcQW0MAT6Impj5Q0pUDS";
 
 app.post('/webhook', express.raw({type: 'application/json'}), (request, response) => {
 
