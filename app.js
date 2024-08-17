@@ -14,7 +14,11 @@ const server = https.createServer(
   }
   ,app
 )
-  ,  io = new Server(server, {origins: '*:*'})
+  ,  io = new Server(server, {
+    cors: {
+      origin: "https://piehost.com/socketio-tester"
+    }
+  })
 
 io.on("connection", (socket) => {
 
