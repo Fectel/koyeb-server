@@ -33,7 +33,10 @@ io.on("connection", (socket) => {
 
 })
 // server.listen(8000)
+app.use(cors());
+
 app.use(express.static('static'))
+
 http.listen(port)
 
 let transactionAmountInCents;
