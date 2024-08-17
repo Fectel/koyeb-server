@@ -16,7 +16,9 @@ const server = https.createServer(
 )
   ,  io = new Server(server, {
     cors: {
-      origin: "https://piehost.com/socketio-tester"
+      origin: ["https://piehost.com",
+        "https://mariachichingon.com",
+      ]
     }
   })
 
