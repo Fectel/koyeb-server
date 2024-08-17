@@ -4,32 +4,38 @@ const { Server } = require("socket.io");
 const https = require('https');
 
 const app = express()
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 8000
+const http = require('http').Server(app) 
+const io = require('socket.io')(http) 
 
 
-const server = https.createServer(
-  {
-  key: fs.readFileSync('./key.pem'),
-  cert: fs.readFileSync('./cert.pem')
-  }
-  ,app
-)
-  ,  io = new Server(server, {
-    cors: {
-      origin: ["https://piehost.com",
-        "https://mariachichingon.com",
-      ]
-    }
-  })
+// const server = https.createServer(
+//   {
+//   key: fs.readFileSync('./key.pem'),
+//   cert: fs.readFileSync('./cert.pem')
+//   }
+//   ,app
+// )
+//   ,  io = new Server(server, {
+//     cors: {
+//       origin: ["https://piehost.com",
+//         "https://mariachichingon.com"
+//       ]
+//     }
+//   })
 
 io.on("connection", (socket) => {
 
   console.log("socket.io is connected")
+  socket.on('message', (msg) => { 
+    console.log("REceived Meesage")
+    io.emit('message', msg) 
+  }) 
+
 })
-server.listen(port)
+// server.listen(8000)
+
 
 app.use(express.static('static'))
-app.listen(server)
-// app.listen(port, () => {
-//   console.log(`App listening at http://localhost:${port}`)
-// })
+http.listen(port)
+// app.listen([port])
