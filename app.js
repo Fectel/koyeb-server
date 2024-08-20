@@ -120,6 +120,8 @@ app.post('/webhook', express.raw({type: 'application/json'}), (request, response
           invoice_number = checkoutSessionAsyncPaymentSucceeded.id
 
           break;
+          io.emit('message', {invoice_pdf, invoice_number, transactionAmountInCents, contractSignatureUrl, contractImgUrl})
+
       default:
      console.log(`Unhandled event type ${event.type}`);
   }
