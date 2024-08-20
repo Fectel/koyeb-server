@@ -26,6 +26,7 @@ const stripe = require('stripe')("sk_test_tR1lCdhSwpvNA0iYNSE5lDY000PKNJL8Ys")
 //     }
 //   })
 
+<<<<<<< HEAD
 app.use((req, res, next) => {
   if (req.originalUrl === '/webhook' ) {
       next()
@@ -72,14 +73,52 @@ io.on('connection', function (request) {
       }
   // }
 });
+=======
+// io.on("connection", (socket) => {
+
+//   console.log("socket.io is connected")
+//   socket.on('message', (msg) => { 
+//     console.log("REceived Meesage")
+//     io.emit('message', msg) 
+//   }) 
+
+// })
+>>>>>>> ce0f4bb5f7d88510ecf3a91e1f95b3e4ce32a568
 // server.listen(8000)
+
+
 app.use(cors());
 
 // app.use(express.static('static'))
 app.get("/", (req, res) => {
+<<<<<<< HEAD
   res.send("Hello World");
 });
+=======
+    res.send("Hello World");
+});
+
+>>>>>>> ce0f4bb5f7d88510ecf3a91e1f95b3e4ce32a568
 http.listen(port)
+
+app.use((req, res, next) => {
+    if (req.originalUrl === '/webhook' ) {
+        next()
+    }else {
+        bodyParser.json()(req, res, next);
+        // bodyParser.urlencoded({extended: true})(req, res, next);
+    }
+})
+app.use((req, res, next) => {
+  if (req.originalUrl === '/webhook') {
+      next()
+  }else {
+      bodyParser.urlencoded({ extended: true })(req, res, next);
+      // bodyParser.urlencoded({extended: true})(req, res, next);
+  }
+})
+
+
 
 let transactionAmountInCents;
 let invoice_pdf;
@@ -125,5 +164,38 @@ app.post('/webhook', express.raw({type: 'application/json'}), (request, response
   }
 
 });
+<<<<<<< HEAD
+
+=======
+// app.use(cors());
+>>>>>>> ce0f4bb5f7d88510ecf3a91e1f95b3e4ce32a568
+
+io.on('connection', function (request) {
+    console.log("WS REQUEST Connection")
+    // if (pendingMemberId && pendingMembershipName && pendingMembershipId){
+        var userID = getUniqueID();
+        console.log((new Date()) + ' Recieved a new connection from origin ' + request.origin + '.');
+
+        // You can rewrite this part of the code to accept only the requests from allowed origin
+        const connection = request.accept(null, request.origin);
+        clients[userID] = connection;
+        console.log('connected: ' + userID + ' in ' + Object.getOwnPropertyNames(clients));
+
+        console.log(invoice_pdf, invoice_number, transactionAmountInCents, "invoice info")
+
+        let done = false;
 
 
+        console.log(invoice_number)
+        if (invoice_number === undefined){
+            for(key in clients) {
+                clients[key].send(transactionAmountInCents);
+
+            }
+        }else {
+            for(key in clients) {
+                clients[key].send(`${invoice_pdf}@${transactionAmountInCents}@${invoice_number}@${contractSignatureUrl}@${contractImgUrl}`);
+            }
+        }
+    // }
+});
