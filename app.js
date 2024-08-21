@@ -72,8 +72,13 @@ app.post('/webhook', express.raw({type: 'application/json'}), (request, response
   let event;
 
   try {
+    io.emit('message', "before stripe constructEvent") 
+
       event = stripe.webhooks.constructEvent(request.body, request.headers['stripe-signature'], endpointSecret);
-  } catch (err) {
+
+    } catch (err) {
+        io.emit('message', `Webhook Error ${err.message} `) 
+
       console.log(`Webhook Error: ${err.message}`);
       return;
   }
