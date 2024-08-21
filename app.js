@@ -96,14 +96,14 @@ app.post('/webhook', express.raw({type: 'application/json'}), (request, response
           // invoice_pdf = checkoutSessionAsyncPaymentSucceeded.hosted_invoice_url
           invoice_number = checkoutSessionAsyncPaymentSucceeded.id
           io.emit('message',`Inside switch statement/`)
-          io.emit('message', invoice_pdf)
+          io.emit('message', `invoice_pdf: ${invoice_pdf}`)
+          io.emit('message', `invoice_number: ${invoice_number}`)
+          io.emit('message', `transactionAmountInCents: ${transactionAmountInCents}`)
+          io.emit('message', `contractSignatureUrl: ${contractSignatureUrl}`)
+          io.emit('message', `contractImgUrl: ${contractImgUrl}`)
           io.emit('message', invoice_number)
           io.emit('message', {invoice_pdf, invoice_number, transactionAmountInCents, contractSignatureUrl, contractImgUrl})
-          io.emit('message', `invoice_pdf: ${invoice_pdf}
-            invoice_number: ${invoice_number} 
-            transactionAmountInCents: ${transactionAmountInCents}
-            contractSignatureUrl: ${contractSignatureUrl}
-            contractImgUrl: ${contractImgUrl}`
+          io.emit('message', `invoice_pdf: ${invoice_pdf} invoice_number: ${invoice_number} transactionAmountInCents: ${transactionAmountInCents} contractSignatureUrl: ${contractSignatureUrl}contractImgUrl: ${contractImgUrl}`
             )
 
           break;
