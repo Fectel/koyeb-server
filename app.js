@@ -46,6 +46,7 @@ if (req.originalUrl === '/webhook') {
 app.use(cors());
 
 app.use(express.static('static'))
+app.use(express.json({verify: (req,res,buf) => { req.rawBody = buf }}))
 // app.get("/", (req, res) => {
 //   res.send("Hello World");
 // });
