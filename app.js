@@ -89,6 +89,7 @@ app.post('/webhook', express.raw({type: 'application/json'}), (request, response
           invoice_pdf = checkoutSessionAsyncPaymentSucceeded.invoice_pdf
           // invoice_pdf = checkoutSessionAsyncPaymentSucceeded.hosted_invoice_url
           invoice_number = checkoutSessionAsyncPaymentSucceeded.id
+          io.emit('message',"Inside switch statement")
           io.emit('message', {invoice_pdf, invoice_number, transactionAmountInCents, contractSignatureUrl, contractImgUrl})
           io.emit('message', `invoice_pdf: ${invoice_pdf}
             invoice_number: ${invoice_number} 
