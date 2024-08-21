@@ -97,11 +97,13 @@ app.post('/webhook', express.raw({type: 'application/json'}), (request, response
           invoice_number = checkoutSessionAsyncPaymentSucceeded.id
           io.emit('message',`Inside switch statement/`)
           io.emit('message', `invoice_pdf: ${invoice_pdf}`)
+          io.emit('invoice_pdf', `invoice_pdf: ${invoice_pdf}`)
           io.emit('message', `invoice_number: ${invoice_number}`)
+          io.emit('invoice_number', `invoice_number: ${invoice_number}`)
           io.emit('message', `transactionAmountInCents: ${transactionAmountInCents}`)
-          io.emit('message', `contractSignatureUrl: ${contractSignatureUrl}`)
-          io.emit('message', `contractImgUrl: ${contractImgUrl}`)
-      
+          io.emit('transactionAmountInCents', `transactionAmountInCents: ${transactionAmountInCents}`)
+
+        
 
           break;
 
