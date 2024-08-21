@@ -101,10 +101,7 @@ app.post('/webhook', express.raw({type: 'application/json'}), (request, response
           io.emit('message', `transactionAmountInCents: ${transactionAmountInCents}`)
           io.emit('message', `contractSignatureUrl: ${contractSignatureUrl}`)
           io.emit('message', `contractImgUrl: ${contractImgUrl}`)
-          io.emit('message', invoice_number)
-          io.emit('message', {invoice_pdf, invoice_number, transactionAmountInCents, contractSignatureUrl, contractImgUrl})
-          io.emit('message', `invoice_pdf: ${invoice_pdf} invoice_number: ${invoice_number} transactionAmountInCents: ${transactionAmountInCents} contractSignatureUrl: ${contractSignatureUrl}contractImgUrl: ${contractImgUrl}`
-            )
+      
 
           break;
 
