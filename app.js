@@ -9,7 +9,7 @@ const app = express()
 const port = process.env.PORT || 8000
 const http = require('http').Server(app) 
 const io = require('socket.io')(http) 
-const stripe = require('stripe')("sk_test_tR1lCdhSwpvNA0iYNSE5lDY000PKNJL8Ys")
+const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY)
 
 // const server = https.createServer(
 //   {
