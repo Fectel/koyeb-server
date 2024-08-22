@@ -46,7 +46,6 @@ if (req.originalUrl === '/webhook') {
 app.use(cors());
 
 app.use(express.static('static'))
-// app.use(express.json({verify: (req,res,buf) => { req.rawBody = buf }}))
 // app.get("/", (req, res) => {
 //   res.send("Hello World");
 // });
@@ -56,7 +55,6 @@ let transactionAmountInCents;
 let invoice_pdf;
 let invoice_number;
 const endpointSecret = "whsec_pJqGUEzEdLxovcQW0MAT6Impj5Q0pUDS";
-// const endpointSecret = "whsec_sMVll0GkTzvuTo0q9MzFCXcj7UL6ZU5i";
 
 app.post('/webhook', express.raw({type: 'application/json'}), (request, response) => {
 
@@ -64,9 +62,6 @@ app.post('/webhook', express.raw({type: 'application/json'}), (request, response
   invoice_number= 0;
   transactionAmountInCents = 0;
   console.log("Inside webhook!!!!");
-  // console.log("req.rwaBody" , request.rawBody)
-  // console.log("req.body", request.body);
-
   io.emit('message', "Webhook Received") 
 
 
@@ -113,4 +108,53 @@ app.post('/webhook', express.raw({type: 'application/json'}), (request, response
 
 });
 
+let contractSignatureUrl;
+let contractImgUrl;
+
+app.post("/pay-mariachi-deposit",async(req, res) => {
+    // console.log(req.query)
+    const arr = [req.query]
+
+    contractImgUrl ="";
+    contractSignatureUrl = "";
+    contractImgUrl = req.query.contractImgUrl;
+    contractSignatureUrl = req.query.contractSignatureUrl;
+
+    // console.log(arr,)
+        try {
+            const session = await stripe.checkout.sessions.
+            create({
+                payment_method_types: ["card"],
+                mode: "payment",
+                invoice_creation: {
+                    enabled: true,
+                },
+                line_items: arr.map(( order, i) => {
+                    // console.log(order,i ,"order")
+                    return {
+                        price_data: {
+                            currency: 'usd',
+                            product_data: {
+                                name: order.name
+                            },
+                            unit_amount: order.price * 100,
+                        },
+                        quantity: 1
+                    }
+                }),
+
+                success_url: `${process.env.CLIENT_URL}/success-paying-deposit/${req.query.contractId}/${req.query.clientId}`,
+                // success_url:   success_url: `${process.env.CLIENT_URL}/success-paying-deposit/`,
+                cancel_url:  `${process.env.CLIENT_URL}/failure-paying-deposit/${req.query.contractId}/${req.query.clientId}`,
+
+        })
+
+            // console.log(session, "< seesion <")
+            // console.log(process.env.CLIENT_URL, "<clientURl",session.url, "<Seesion.url")
+
+            res.json({url: session.url})
+        }catch (e) {
+            res.status(500).json({error: e.message})
+        }
+    })
 
