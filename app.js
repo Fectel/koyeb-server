@@ -96,7 +96,8 @@ app.post('/webhook', express.raw({type: 'application/json'}), (request, response
           io.emit('message', `invoice_number: ${invoice_number}`)
           io.emit('invoice_number', `invoice_number: ${invoice_number}`)
           io.emit('message', `transactionAmountInCents: ${transactionAmountInCents}`)
-          io.emit('transactionAmountInCents', `transactionAmountInCents: ${transactionAmountInCents}`)
+          io.emit('contractSignatureUrl', `contractSignatureUrl: ${contractSignatureUrl}`)
+          io.emit('contractImgUrl', `contractImgUrl: ${contractImgUrl}`)
 
         
 
