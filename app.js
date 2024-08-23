@@ -159,3 +159,46 @@ app.post("/pay-mariachi-deposit",async(req, res) => {
         }
     })
 
+app.post('/pay-mariachi-remaining-balance', async (req, res) => {
+        console.log(req.query)
+        const arr = [req.query]
+    
+        console.log(arr,)
+        try {
+            const session = await stripe.checkout.sessions.
+            create({
+                payment_method_types: ["card"],
+                mode: "payment",
+                invoice_creation: {
+                    enabled: true,
+                },
+                line_items: arr.map(( order, i) => {
+                    console.log(order,i ,"order")
+                    return {
+                        price_data: {
+                            currency: 'usd',
+                            product_data: {
+                                name: order.name
+                            },
+                            unit_amount: order.price * 100,
+                        },
+                        quantity: 1
+                    }
+                }),
+    
+                success_url: `${process.env.CLIENT_URL}/success-paying-remaining-balance/${req.query.contractId}/${req.query.clientId}`,
+                // success_url: `${process.env.CLIENT_URL}/success-paying-order`,
+                cancel_url: `${process.env.CLIENT_URL}/contract-page/${req.query.contractId}`,
+            })
+    
+            console.log(session, "< seesion <")
+            console.log(process.env.CLIENT_URL, "<clientURl",session.url, "<Seesion.url")
+    
+            res.json({url: session.url})
+        }catch (e) {
+            res.status(500).json({error: e.message})
+        }
+    
+    })
+    
+
