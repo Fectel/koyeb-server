@@ -55,6 +55,7 @@ let transactionAmountInCents;
 let invoice_pdf;
 let invoice_number;
 //test one
+//SHOULD WORK
 // const endpointSecret = "whsec_pJqGUEzEdLxovcQW0MAT6Impj5Q0pUDS";
 const endpointSecret = "whsec_ZXTu5EU99KNO9kGmgBZYL64CaubnHZ6s";
 
